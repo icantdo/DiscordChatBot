@@ -1,8 +1,8 @@
-# Luna — Discord Chatbot Architecture
+# Echo — Discord Chatbot Architecture
 
 > Closed-source project. This document covers architecture and design decisions only.
 
-Luna is a Discord chatbot designed to simulate human-like conversation behavior. It tracks social relationships, acts autonomously when bored, and operates on a four-layer memory system. All text and personality are in Turkish.
+Echo is a Discord chatbot designed to simulate human-like conversation behavior. It tracks social relationships, acts autonomously when bored, and operates on a four-layer memory system. All text and personality are in Turkish.
 
 ---
 
@@ -137,7 +137,7 @@ The emotion tag is embedded inside the response and extracted before cleanup. Th
 Last 15 messages per channel, 5-minute TTL. Provides immediate conversational context.
 
 **LTM (Long-Term Memory)**
-SQLite with FTS5 full-text search. Turkish unicode tokenizer. Entries below a confidence threshold (<0.3) are not stored. An echo filter prevents memory from bloating with repeated content.
+SQLite with FTS5 full-text search. Turkish unicode tokenizer. Entries below a confidence threshold (<0.3) are not stored. An Echo filter prevents memory from bloating with repeated content.
 
 **Vector Memory**
 ChromaDB with `all-MiniLM-L6-v2` embeddings (384 dimensions). Finds results by semantic similarity — catches connections that keyword search misses. Cosine similarity, threshold 0.4.
@@ -145,13 +145,13 @@ ChromaDB with `all-MiniLM-L6-v2` embeddings (384 dimensions). Finds results by s
 **Graph Memory (Neo4j)**
 Stores social relationships in a structured graph.
 
-Node types: `User` · `Luna` · `Topic` · `Trait`
+Node types: `User` · `Echo` · `Topic` · `Trait`
 
 Edge types:
 
 | Edge | Description |
 |---|---|
-| `RELATIONSHIP` (User→Luna) | Affinity score (-100 to +100) |
+| `RELATIONSHIP` (User→Echo) | Affinity score (-100 to +100) |
 | `INTERACTED_WITH` (User↔User) | User-to-user sentiment (EMA blended) |
 | `INTERESTED_IN` (User→Topic) | Interest area and intensity |
 | `HAS_TRAIT` (User→Trait) | Personality trait and confidence score |
